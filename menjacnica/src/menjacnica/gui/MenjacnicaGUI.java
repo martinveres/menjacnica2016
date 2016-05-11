@@ -135,7 +135,7 @@ public class MenjacnicaGUI extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					
 					if (table.getSelectedRow() != -1) {
-						
+						GUIKontroler.prikaziObrisiKurs(table.getSelectedRow(), table);
 					}
 				}
 			});
@@ -149,8 +149,8 @@ public class MenjacnicaGUI extends JFrame {
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (table.getSelectedRow() != -1) {
+						GUIKontroler.prikaziIzvrsiZamenuGUI(table);
 						
-						GUIKontroler.prikaziObrisiKurs(table.getSelectedRow(), table);
 					}
 				}
 			});
@@ -247,19 +247,7 @@ public class MenjacnicaGUI extends JFrame {
 	}
 
 	private void ucitajIzFajla() {
-		try {
-			JFileChooser fc = new JFileChooser();
-			int returnVal = fc.showOpenDialog(contentPane);
-
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				sistem.ucitajIzFajla(file.getAbsolutePath());
-				prikaziSveValute();
-			}	
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(contentPane, e1.getMessage(),
-					"Greska", JOptionPane.ERROR_MESSAGE);
-		}
+		GUIKontroler.ucitajIzFajla(table);
 	}
 	
 	protected void prikaziSveValute() {
@@ -270,18 +258,6 @@ public class MenjacnicaGUI extends JFrame {
 	
 	
 
-	private void prikaziObrisiKursGUI() {
-		
-		if (table.getSelectedRow() != -1) {
-			MenjacnicaTableModel model = (MenjacnicaTableModel)(table.getModel());
-			ObrisiKursGUI prozor = new ObrisiKursGUI(this,
-					model.vratiValutu(table.getSelectedRow()));
-			prozor.setLocationRelativeTo(contentPane);
-			prozor.setVisible(true);
-		}
-	}
-	
-	
 
 	private JTable getTable() {
 		if (table == null) {

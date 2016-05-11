@@ -68,4 +68,33 @@ public class GUIKontroler {
 					"Greska", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	public static void ucitajIzFajla(JTable table) {
+		try {
+			JFileChooser fc = new JFileChooser();
+			int returnVal = fc.showOpenDialog(glavniProzor);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				menjacnica.ucitajIzFajla(file.getAbsolutePath());
+				prikaziSveValute(table);
+			}	
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(glavniProzor, e1.getMessage(),
+					"Greska", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	public static void prikaziSveValute(JTable table) {
+		MenjacnicaTableModel model = (MenjacnicaTableModel)(table.getModel());
+		model.staviSveValuteUModel(menjacnica.vratiKursnuListu());
+
+	}
+	public static void prikaziIzvrsiZamenuGUI(JTable table) {
+		
+			MenjacnicaTableModel model = (MenjacnicaTableModel)(table.getModel());
+			IzvrsiZamenuGUI prozor = new IzvrsiZamenuGUI(glavniProzor,
+					model.vratiValutu(table.getSelectedRow()));
+			prozor.setLocationRelativeTo(null);
+			prozor.setVisible(true);
+		
+	}
 }
